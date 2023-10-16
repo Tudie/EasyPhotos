@@ -2,7 +2,11 @@ plugins {
     id 'com.android.library'
     id("maven-publish")
 }
-
+group = 'com.github.tudie'
+task generateSourcesJar(type: Jar){
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdk 33
@@ -24,29 +28,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    publishing {
+        singleVariant("release")
+    }
 }
-//将源码打包
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-//发布maven库
 
+//发布maven库
 afterEvaluate {
     publishing {
-        //配置maven-publishing插件的输出物
         publications {
-            maven(MavenPublication) {
-                // 依赖 bundleReleaseAar 任务，并上传其产出的aar
-                // 方式一：生成aar包
-                //afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
-                // 方式二：指定生成的aar路径
-                //发布仓库的文件路径
-                groupId = 'com.github.tudie'
-                //库名
-                artifactId = 'EasyPhotos'
-                //版本号
-                version = '1.0.0'
+            release(MavenPublication) {
+                from components.release         // 表示发布 release（jitpack 都不会使用到）
+                groupId = 'com.huantansheng.easyphotos' // 这个是依赖库的组 id
+                artifactId = 'easyphotos'       // 依赖库的名称（jitpack 都不会使用到）
+                version ="1.0.0"                //当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
             }
         }
     }
