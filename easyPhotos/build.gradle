@@ -1,9 +1,7 @@
 plugins {
     id 'com.android.library'
-    id("maven-publish")//aar推送到jitpack
-    id 'pl.allegro.tech.build.axion-release' version '1.13.6'//用来发行aar版本的插件
+    id 'maven-publish' //aar推送到jitpack
 }
-group = 'com.github.tudie'
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdk 33
@@ -25,46 +23,35 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
+//    publishing {
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
+//    }
 
 }
-
+def properties = new Properties()
+properties.load(rootProject.file("local.properties").newInputStream())
+def gitUser = properties.getProperty("gitUser")
+def gitPassWord = properties.getProperty("gitPassWord")
+def GROUPNAME = properties.getProperty("GROUPNAME")
+def ARTIFACTID = properties.getProperty("ARTIFACTID")
+def VERSIONNAME= properties.getProperty("VERSIONNAME")
 afterEvaluate {
     publishing {
         publications {
+            // Creates a Maven publication called "release".
             release(MavenPublication) {
-                from components.release
-                groupId = 'com.github.Tudie' // 这个是依赖库的组 id
-                artifactId = 'easyPhotos'       // 依赖库的名称（jitpack 都不会使用到）
-                version ="1.0.0.5"                //当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
-            }
-        }
-        //jitpack推送授权
-        repositories {
-            maven {
-                name('jitpack')
-                url "https://jitpack.io"
-                credentials {
-                    username 'yangguangrush@gmail.com'
-                    password 'YG1992Love19'
-                }
+                groupId = GROUPNAME
+                artifactId = ARTIFACTID
+                version = VERSIONNAME
             }
         }
     }
 }
 
-//release插件，https授权
-scmVersion{
-    repository{
-        customUsername 'yangguangrush@gmail.com'
-        customPassword 'YG1992Love19'
-    }
-}
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
