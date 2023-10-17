@@ -3,10 +3,6 @@ plugins {
     id("maven-publish")
 }
 group = 'com.github.tudie'
-task generateSourcesJar(type: Jar){
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdk 33
