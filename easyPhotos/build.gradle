@@ -5,10 +5,10 @@ plugins {
 group = 'com.github.tudie'
 android {
     namespace 'com.huantansheng.easyphotos'
-    compileSdk 33
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdk 24
+        minSdk 23
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
