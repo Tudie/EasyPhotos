@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish' //aar推送到jitpack
 }
+apply from: rootDir.path + "/gradle-mvn-push.gradle"
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdk 33
@@ -23,32 +23,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-//    publishing {
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
 
-}
-def properties = new Properties()
-properties.load(rootProject.file("local.properties").newInputStream())
-def gitUser = properties.getProperty("gitUser")
-def gitPassWord = properties.getProperty("gitPassWord")
-def GROUPNAME = properties.getProperty("GROUPNAME")
-def ARTIFACTID = properties.getProperty("ARTIFACTID")
-def VERSIONNAME= properties.getProperty("VERSIONNAME")
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                groupId = GROUPNAME
-                artifactId = ARTIFACTID
-                version = VERSIONNAME
-            }
-        }
-    }
 }
 
 

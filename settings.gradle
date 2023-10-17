@@ -16,6 +16,15 @@ dependencyResolutionManagement {
         mavenLocal()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven {
+            credentials {
+                username USERNAME
+                password PASSWORD
+            }
+            //允许使用 http
+            allowInsecureProtocol = true
+            url RELEASE_REPOSITORY_URL
+        }
     }
 }
 
