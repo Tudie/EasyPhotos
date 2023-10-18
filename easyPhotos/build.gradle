@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
-apply from: rootDir.path + "/gradle-mvn-push.gradle"
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdk 33
@@ -25,7 +25,20 @@ android {
     }
 
 }
+afterEvaluate {
+    publishing {
+        publications {
+            //SDK Release 版本
+            sdkRelease(MavenPublication) {   //这个的 Release 名称是可以随意进行定义的
+                from components.release  //关键是这个地方的值该如何配置的问题。
+                groupId = 'com.github.Tudie'
+                artifactId = 'EasyPhotos'
+                version = '3.1.7'
+            }
 
+        }
+    }
+}
 
 dependencies {
 
