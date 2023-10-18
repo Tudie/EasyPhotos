@@ -1,1 +1,1 @@
-# EasyPhotos EasyPhotos Android13兼容
+# EasyPhotos Android13兼容
